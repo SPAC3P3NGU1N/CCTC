@@ -1,0 +1,83 @@
+Pre-CCTC Study Materials:
+https://pctc.cert.org/lms/
+https://learn.dcita.edu/
+https://fedvte.usalearning.gov/
+
+
+OpenStack Address:
+https://vta.cybbh.space
+Domain: default
+User: AITph2-18-010-Student-03
+Pw: MarinesFluorocarbonRounders
+
+Log into Openstack, hit Orchestration, Stacks, create new stack, direct input, copy/paste the yaml file from Blackboard and take out trailing spaces, create new.
+
+After 25mins, go to Compute, Instances, Windows 1803, Console
+Log in with last name and password.
+Let the scripts run.
+
+To run as RDP, in the Linux CLI:
+xfreerdp +clipboard /size 1920x1020 /u:Philips /p:password /v:10.50.24.25 (get the IP from OpenStack)
+
+Once in the box, open a Command shell
+
+Windows Command Line Commands:
+color A - changes everything to green
+set - shows all environmental variables
+set X=4 - sets the variable X to equal 4
+echo %X% - displays the vaule of X
+where - finds executables within the PATH variable
+dir - list folder contents
+type - output contents of a file
+findstr - windows grep (use /i switch before the string to use case-insensitive)
+hostname - displays system hostname
+date /t - output system date (the /t keeps it from trying to set)
+time /t - output system time (the /t "" "")
+
+Redirection Operators:
+> - redirects STDOUT. create/overwrite
+>> - redirects STDOUT. create/appends
+| - piping sends output of one command to input of another
+
+Conditional Processing:
+& - execute second command regardless of success/failure of first
+; - execute second command regardless of success/failure of first
+&& - execute second command ONLY if the first is successful
+|| - execute second command ONLY if the first fails
+
+Nesting Commands:
+( ) - nest commands for complex arrangements
+- Use these to create IF/ELSE commands, for example
+((dir COMMAND && echo success) || echo failure) - this will try to run the COMMAND, and output success if it works, but if it fails it will echo failure
+
+CLI Tools Used Commonly:
+net user (OR) net user /domain
+net localgroup
+net localgroup Administrators
+net share
+tasklist /svc (OR) sc query state=all
+ipconfig
+arp -av
+nbtstat -n
+netstat -r
+systeminfo
+
+WMIC tools used:
+wmic /?
+wmic USERACCOUNT
+LOGON
+GROUP
+SHARE
+SERVICE
+NIC
+NICCONFIG
+NTDOMAIN
+OS
+BIOS
+CPU
+MEMPHYSICAL
+NIC
+DISKDRIVE
+PROCESS
+
+

@@ -1,0 +1,139 @@
+WMIC commands followed the command structure non-verb:
+WMIC <NOUN> <VERB>
+
+Powershell flips it, uses the verb-noun pattern:
+e.g. get-process
+
+Powershell uses commandlets (cmdlets) that are unique to Powershell
+
+To get help in Powershell:
+get-help <command/content>
+e.g. get-help get-process will show you the help file for process
+
+To update the help command:
+Update-Help
+
+In cmd, external commands return a STRING
+In Powershell, commands return an OBJECT
+
+An OBJECT is a data structure that contains both properties (data) and methods (functions)
+
+To see examples of Powershell commands:
+get-help get-processes -Examples
+get-help get-processes -Online
+
+
+You can sort by properties this way:
+(Get-Process).Name
+For multiple properties:
+Get-Process | select-object name, id, path
+
+Alias list:
+gal (OR) get-alias (OR) alias
+To see specific aliases:
+get-alias -definition get-<aliasname>
+
+To allow Powershell to run without prompts:
+Set-ExecutionPolicy -ExecutionPolicy unrestricted -force
+
+To see a process for a specific program:
+get-process <PROGRAM>
+e.g. get-process MicrosoftEdge
+
+To start a process:
+start-process <PROCESS>
+
+To kill a process:
+(get-process MicrosoftEdge).kill()
+
+To see how many processes are running:
+(get-process).count
+
+To create a variable:
+$<variable>=<value>
+e.g. $a="Hello World"
+
+To call a variable:
+$<variable>
+e.g. $a
+
+When setting values, SINGLE QUOTES are literal, DOUBLE QUOTES allow variables
+e.g. Write-Output "The value of a is $a" will output The value of a is Hello World
+Write-Output 'The value of a is $a' will output The value of a is $a
+
+To see environmental variables:
+gci env:
+
+To see specific variables
+$env:<variable>
+
+Integrated Scripting Environment (ISE):
+just type "ise" in regular powershell command
+
+Looping:
+$(get-process).name | foreach {write-output "$_ is a running process" }
+This will go thru each running process, and output it as <PROCESS NAME> is a running process
+
+foreach ($p in Get-Process) {Write-Output "$($p.name) is a running process" }
+This one creates the variable p, assigns it the values within Get-Process, and then runs the loop, only calling for the name value in p, and says it's a running process
+
+$a=1..5; foreach ($i in $a) {Write-Output "$i is a number"}
+This sets a range of values for a, states each value as i, and writes the output for each value, as opposed to the range
+
+$x=0; while ($x -lt 10) {Write-Output "this is loop number $x"; $x++}
+This sets a baseline of x=0, then says while x <10, write the output, and increase the value of x by 1 each time
+
+$x=0; cls; while ($x -lt 10) {Write-Output "this is loop number $x"; sleep 1; $x++}
+This runs the same as before, but it starts by clearing the screen, running the same loop, but pausing 1second between each iteration
+
+while ($true) {$now = Get-Date -Format hh:mm; if ($now  -eq "05:00") {break}}
+While the following statement is true, it will execute until the time equals 05:00.
+k
+Indexing:
+(get-process)[4] will give us the 5th process (remember, indexes start at 0)
+((get-process)[4]).name will give us the name of the 5th process
+(get-process)[0..4].name will give us the names of the 0-5th process
+
+Arithmetic:
+1+1 will output 2
+"dog"+1 will output dog1
+$a=1;$a+1 will output 2
+$a="1";$a+2 will output 12 because it thinks 1 is a string
+
+Powershell Functions:
+Function do_stuff {Get-Date; Get-Process; Get-Service}
+do_stuff
+The first line creates the function "do_stuff", the second line executes it
+
+Get-Ciminstance
+e.g. Get-Ciminstance win32_loggedonuser
+Get-Ciminstance win32_processor
+Get-Ciminstance win32_bios
+Get-CimClass
+
+Sorting:
+get-process |sort-object -Property id
+This will get all running processes, and sort them by Process ID #
+
+get-process | where {$_.id -lt "1000"} | sort-object -Property Id
+This will only display the process IDs less than 1000, and sort them by ID#
+
+To create a new item:
+New-Item -type File <filename.filetype>
+
+To remove it:
+Remove-item <filename.filetype> -verbose
+This will tell us each step it's taken
+
+To find the description of a service:
+get-wmiobject win32_service | where-object {$_.Name -eq 'SERVICENAME'} | format-list Name, Description
+
+
+
+
+
+
+
+
+
+

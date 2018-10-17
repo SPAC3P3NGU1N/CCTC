@@ -1,0 +1,54 @@
+To compare two files using powershell:
+compare (gc <file1>) (gc <file2>)
+
+For Crappie:
+C:\Users\CTF\Documents\WWW\200
+
+To find unique words in a text file:
+PS C:\> $A = $(foreach ($line in Get-Content C:\Test1\File1.txt) {$line.tolower().split(" ")}) | sort | Get-Unique
+PS C:\> $A.count
+
+To unzip in Powershell:
+Expand-Archive <FILEPATH> -DestinationPath <FILEPATH2>
+
+To sort words.txt:
+Get-Content words.txt | Sort-Object -Descending
+
+To count the number of files in a folder:
+CD into the folder, then:
+Get-ChildItem | Measure-Object | %{$_.Count}
+
+To count the number of words in a file:
+Get-Content <FILEPATH> | Measure-Object -Word
+
+To count the number of folders in a directory:
+(Get-ChildItem -Path <DIRPATH> | where-object {$_.PSIsContainer}).Count
+
+To find out when a hotfix was installed:
+get-hotfix
+
+To find TPM information:
+get-tpm
+
+To find spaces... dig down and use tab-complete to find the "z          a" folder
+
+To find the number of times a string appears in a file:
+Select-String -Path "<FILEPATH>" -Pattern "PATTERN"
+
+To find the recursive omega zips:
+$flag=$true
+while($flag){foreach($item in gci 'c:\Users\CTF\Documents\Omega' -include '*.zip'){expand-archive -path $item -DestinationPath c:\Users\CTF\Documents\Omega; remove-item $item}}
+
+To find the hash of the hosts file:
+get-filehash -Algorithm MD5 -Path c:\windows\system32\drivers\etc\hosts
+
+Fortune Cookie: gci -Path c:\ -Include *fortune* -recurse -force -ErrorAction SilentlyContinue
+c:\users\ctf\documents\fortune cookie.txt
+c:\windows\pla\not_anihc\Fortune Cookie Crumb
+""\The Fortune Cookie
+
+To find user profile:
+gwmi win32_userprofile
+
+To find a service SID:
+sc.exe showsid '<SERVICENAME>'
