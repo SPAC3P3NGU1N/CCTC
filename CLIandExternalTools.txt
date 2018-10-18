@@ -1,0 +1,33 @@
+CLI Commands to know:
+--------------------
+echo
+set
+where
+net
+tasklist
+sc
+wmic useraccount
+wmic group
+wmic process
+wmic service
+get-process
+get-service
+get-CimInstance
+get-help
+get-alias
+get-member
+
+
+
+External Tools to know:
+----------------------
+psinfo
+pslist
+procexp
+procmon
+autoruns
+tcpview
+logonsessions
+psloggedon
+psexec
+handle

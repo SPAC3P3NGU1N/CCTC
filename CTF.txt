@@ -1,3 +1,5 @@
+http://10.50.21.164:8000
+
 To compare two files using powershell:
 compare (gc <file1>) (gc <file2>)
 
@@ -30,7 +32,7 @@ get-hotfix
 To find TPM information:
 get-tpm
 
-To find spaces... dig down and use tab-complete to find the "z          a" folder
+To find Spaces challenges... dig down and use tab-complete to find the "z          a" folder
 
 To find the number of times a string appears in a file:
 Select-String -Path "<FILEPATH>" -Pattern "PATTERN"
@@ -43,12 +45,38 @@ To find the hash of the hosts file:
 get-filehash -Algorithm MD5 -Path c:\windows\system32\drivers\etc\hosts
 
 Fortune Cookie: gci -Path c:\ -Include *fortune* -recurse -force -ErrorAction SilentlyContinue
-c:\users\ctf\documents\fortune cookie.txt
-c:\windows\pla\not_anihc\Fortune Cookie Crumb
-""\The Fortune Cookie
+c:\users\ctf\documents\fortune cookie.txt - Only listen to The Fortune Cookie
+c:\Windows\System32\Com - "I cannot help you, for I am just a cookie"
+c:\Windows\SysWow64\Com - "out to lunch.. check back in 5 min."
+c:\windows\pla\not_anihc\Fortune Cookie Crumb - "find the hidden fortune cookie.s . ."
+""\The Fortune Cookie - The fortune you seek is inside The Fortune Cookie on this system
 
 To find user profile:
 gwmi win32_userprofile
 
 To find a service SID:
 sc.exe showsid '<SERVICENAME>'
+
+To find the UAC is Enabled:
+(Get-ItemProperty HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System).EnableLUA
+
+To view UAC Properties:
+Get-ItemProperty HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System
+
+To find the USBs that have been plugged in:
+Get-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Enum\USBSTOR\*\* | Select FriendlyName
+
+To find firewall log:
+gmore c:\Windows\System32\LogFiles\Firewall\pfirewall.log
+
+To find hidden data streams:
+dir /a-d /s /r *filename*
+more<filename:hidden:$DATA
+OR
+get-item -path <location\*\*> -stream "hidden"
+get-content <FILEPATH> -stream "hidden"
+
+To find the SCHTASKS.exe UAC run level:
+Get-Item c:\windows\system32\schtasks.exe | get-acl | Format-List
+-then look at the Owner/Group
+

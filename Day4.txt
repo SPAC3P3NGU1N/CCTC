@@ -1,0 +1,111 @@
+Pre-Boot, Boot, Logon Pre-WINDOWS 7
+--------------------
+BIOS:
+Pre-Boot - POST - Power On Self Test - runs from firmware on the BIOS chip
+- A single beep is a GOOD POST test
+
+MBR - Master Boot Record 
+-loads boot code
+-if running a UEFI in legacy mode, you'll still have a MBR; if not in legacy mode, no MBR;
+
+Bootcode 
+-searches partition table for boot sector and loads NTLDR
+
+NTLDR - 
+-reads in boot.ini for OS choices, runs NTDETECT.com to query hardware
+-stored data from NTDETECT.com in HKLM\Hardware registry key
+-starts NTOSKRNL.exe and HAL.dll - HAL basically serves as a link between the user and the hardware
+-DynamicLinkLibraries (.dll) are basically executables that must be called by another executable)
+
+NTOSKRNL.exe
+-starts SMSS.exe - Session Manager SubSystem (manages a windows session)
+
+SMSS.exe
+-launches Winlogon.exe and CSRSS "scissors cut threads"
+-CSRSS manages threads
+
+Winlogon.exe - usually waits for the SAS for windows - CTRL-ALT-DEL
+-starts LSASS, loads MSGINA, starts SCM, starts logonui.exe
+Local Security Authority Subsystem (LSASS)
+
+MSGINA - Microsoft Graphical identification and authorization dll library
+	-activates the user shell
+	-customizable identification and authentication procedures
+	-logon dialog
+
+Winlogon - receives credentials from MSGINA and passes them to LSASS
+
+LSASS - checks credentials against LSA database cache then NTLM or Kerberos if necessary
+	-sends uer token back to Winlogon
+
+Winlogon - starts userinit in user context
+
+Userinit -loads user profile, runs startup programs, starts explorer.exe
+
+---------------------------------------------------------------------
+A process is a container that runs one or more threads
+Services are the non-interactive threads that run
+
+Pre-boot/etc for Windows 7 - two different types of pre-boot processes: UEFI and BIOS
+-------------------------
+***BIOS***
+-POST
+-MBR
+	-first 512byte sector on HDD
+	-reads and loads Volume Boot Record
+-VBR
+	-loads bootmgr into memory
+-Bootmgr
+	-essentially replaced boot.ini
+	-reads boot config database (BCD)
+	-boot menu and memtest
+	-calls winload (fresh boot)
+	-calls winresume
+-Winload
+	-essentially replaced NTLDR
+	-loads NTOSKRNL.exe
+	-loads dependencies
+	-loads device drivers
+
+OR
+
+***EFI/UEFI***
+-POST
+-Runs Bootloader from NVRAM
+	-loads Boot Config Database (BCD) also in NVRAM
+-Bootloader detects hardware
+-EFI boot manager gives OS boot menu
+-Winload.efi: EFI version of Winload
+-Requires EFI system partition
+	-formatted as FAT
+	-up to 1gb in size
+
+-------------------------------
+Main difference between Local Logon and Domain Logon:
+Local logon authenticates locally with the Security Account Manager (SAM)
+Domain logon authenticates with the domain controller
+--------------------------------------------------------
+
+Windows Process States
+----------------------
+New/Created:
+
+Running: Process that is actually executing
+
+Ready: Process is waiting allocation to the processor, but everything else is good to go
+Three kinds of scheduling within ready state: Long/Medium/Short
+
+Waiting: Process is waiting for some condition to be met to move into ready state
+A thread can enter wait state in a number of different ways:
+1- thread can wait for an object to synchronize its execution
+2- the OS can wait on the threads behalf
+3- environment subsystem can direct the thread to suspend itself
+A thread can also be gate waiting, or waiting on a gate dispatcher object
+
+Terminate/Exit: process is complete, and is waiting to be removed from main memory
+----------------------------------------------------------------------------
+
+Virtual Memory
+--------------
+Efficient allocation of memory
+Allows for the over-allocation of memory
