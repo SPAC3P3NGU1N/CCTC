@@ -1,0 +1,52 @@
+CLI Commands to know:
+--------------------
+echo - displays strings/etc on screen
+set - 
+where - helps to identify the location of files/commands/etc
+net
+tasklist
+sc - identifies what services are running via CLI
+wmic useraccount
+wmic group
+wmic process
+wmic service - same as SC or get-service, but via WMIC
+get-process
+get-service - identifies what services are running via Powershell
+get-CimInstance
+get-help
+get-alias
+get-member
+
+
+
+External Tools to know:
+----------------------
+psinfo
+pslist
+procexp
+procmon
+autoruns
+tcpview
+logonsessions
+psloggedon
+psexec
+handle
+
+Process States
+--------------
+New/Created
+Ready
+Running
+Waiting
+Terminated/Exit
+
+Thread States
+-------------
+Initialized
+Ready
+Deferred Ready
+Standby
+Running
+Waiting
+Transition
+Terminated

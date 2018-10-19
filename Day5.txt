@@ -1,0 +1,140 @@
+Windows Services
+----------------
+What are they? - long running executable applications that run in their own container/process
+		- can be started automatically at boot, on demand, or when requested
+		- can be paused, stopped, or restarted
+		- run in the background, normally without a user interface
+		- provide a service such a HTTP, FTP, or RDP
+
+How to identify services on a machine?
+- sc
+- get-service
+- wmic service
+
+examples:
+sc queryex eventlog
+sc qdescription eventlog
+tasklist /FI "pid eq XXX" /svc
+
+Threads
+-------
+- Basic unit to which the OS allocates processor time/resources
+- They exedcute any part of a process code
+	- This can include parts being currently executed by another thread
+- Deadlock is possible if the threads are waiting for each other's resources
+	- e.g. A is waiting for B to execute, B won't execute until A executes
+- Synchronization are used to control access to shared variables
+- Client/Server Runtime SubSystem (CSRSS) maintains the list of threads
+- Threads are part of an execution priority pool (from 0-31) per processor, highest executes next
+
+Handles
+-------
+- Objects are data structures representing a system resource (file/thread/etc)
+- Applications can't access objects directly, must obtain a handle
+- Handles for each process are tracked in an internal table known as the Object Manager
+- Handles allow a common interface to objects, regardless of underlying changes to the object
+- Handles allow Windows to track ACLs for objects during handle creation time
+
+
+Thread States
+-------------
+Initialized:
+	- when a thread is created
+
+Ready:
+	- thread is waiting to execute on the processor
+	- the dispatcher will select from the pool of threads in the ready state
+	- the thread has not yet been selected to run on a specific processor yet
+
+Deferred Ready:
+	- threads that have been selected to run on a specific processor, but have not been scheduled yet
+	-
+
+Standby:
+	- thread in the standby state has been seelcted to run next on a processor by the dispatcher
+	- only one thread can be in the standby state for each processor
+	- 
+
+Running:
+	- once the dispatcher performs a context switch to a thread, the thread executes on the process
+	- this continues until its quantum ends, it gets preempted by a higher priority thread, it 
+	  terminates, or voluntarily enters wait state
+
+Waiting:
+	- can enter the wait state voluntarily to wait for an object to synchronize its execution
+	- the OS can wait on the threads behalf (e.g. waiting to resolve a paging I/O)
+	- the thread either begins running from this state, or is moved back to ready
+
+Transition:
+	- if a thread is ready for execution but its kernel stage is paged out of memory
+	- once the kernel stack is brought back into memory, the thread shifts to READY state
+
+Terminated:
+	- when a thread finishes executing, it terminates
+	- the data structure that describes the thread may/may not be deallocated at this time
+
+
+
+Process vs. Threads vs. Handles
+-------------------------------
+Process - the primary container (memory structure) for a program being executed
+Thread - represents sequential machine-code instructions that a processor executes
+Handle - pointer to OS objects referenceed within a process
+
+System Processes
+----------------
+-Process owned by, and executed by, the operating system
+-required for the system to function
+
+Two Types of System Processes
+-User Mode
+	0 runs in PRIVATE virtual address space
+	- applications are isolated, one crashing will not cause any effects on other users
+- Kernel Mode
+	- all run in a single, shared virtual address space
+	- effects on one will potentially affect all
+
+Process Validity
+----------------
+PID's Sequence
+	- out of order PID
+- Name
+	- unfamiliar process names, duplicate processes, spelled incorrectly
+- Process Age
+	- typical startup processes but launched more recently, e.g. smss.exe
+- Priority Levels
+	- process with higher or lower priority level than required/expected
+- Handles
+	- libraries or files the process has open
+
+
+Other ways to validate:
+- sc query state=all
+	- this will show all services, running stopped etc
+- netstat -ano
+	- compare against sc query
+- takslist /svc
+	- compare
+
+Malware
+-------
+Types of Malware:
+- Virus
+- Worm
+- Trojan
+- Malicious Mobile Code
+- Blended Attack
+- Backdoor
+- Remote Access Tool (RAT)
+- Rootkit
+- Keylogger
+	- Hardware or Software based
+	- Recent examples include PunkeyPOS which attacked POS-systems to extract bank information
+	- EyePyramid - Italian Prime Ministers and other high profile victims
+- Botnet Client
+- Spyware
+- Adware
+- Ransomware
+- Bot Herder
+- Botnet
+- Zombie
