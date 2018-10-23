@@ -1,0 +1,70 @@
+Malware/Process Analysis
+------------------------
+Static Analysis: Examine malware without executing it
+	- Strings command in CMD - see if any strings jump out as maliscious
+		- Syntax: strings <filepath of executable> 
+		- Can also use strings <filepath of exe> | findstr /i "<search string>"	
+	
+	- IDA Pro, OLEDebug - used to perform binary analysis on a file
+
+	- Look at the DLL's used/referenced in STRINGS output
+
+	- OSINT - Google is your friend
+		- Name/hash check for existing information online
+		- Check out VirusTotal.com
+
+Dynamic Analysis: Examine malware while it is running
+	- ProcMon / TaskManager / Procexp
+	- TCPView
+	- IDA Pro, OLEDebug
+	- Reg Shot
+	- Wireshark
+
+
+Virtualization
+--------------
+Allows you to create multiple simulated environments from a physical hardware system.
+Software called a Hypervisor serves as the connection between the virtual machines and the hardware/resources.
+
+
+Situational Awareness
+---------------------
+Things to figure out:
+- What is running on the system?
+	- Processes - tasklist, pslist, procexp, procmon, get-process, wmic process
+	- Services - get-service | where-object {$_.status -eq 'running'}, psservice, wmic service 
+	- Scheduled Tasks - get-scheduledtask | where state -eq 'ready', schtasks
+	- Registry Keys - look for RunOnce, RunKey references, 
+	- Security Products - get-childitem HKLM:\SOFTWARE
+	- Disk Drives - wmic diskdrive list /format:list
+
+- Networking
+	- System networking settings - ipconfig /all, 
+	- Local Subnet - get your Gateway, DHCP server, DNS
+	- Activte Network Connections - netstat -ano |findstr /i 'established'
+	- Routing - route print, netstat -r, 
+	- Firewall Settings - get-NetFirewallRule | where{$_.Enabled -eq 'True' -and $_.Direction -eq 
+			      'Inbound'}, gmore c:\windws\system32\logfiles\firewall\pfirewall.log
+
+- Users
+	- Accounts - net user, net user <username>, get-aduser -filter 'Enabled -eq "False"' (this shows 
+		     disabled users), wmic useraccount, psloggedon
+	- Groups - net localgroup, wmic group
+	- Domain - get-addomain, get-ADGroupMember "domain admins", 
+
+Logging and Auditing
+	- Windows event logs - psloglist, psloglist -a <date> (this shows all rules timestamped after a 
+				specified date)
+	- Windows auditing policies - auditpol /get /category:* 
+
+Areas that are MOST important:
+-Running Processes
+-Active Users
+-Network Configuration
+-Network Communications
+-Logging
+-Scheduled Jobs
+-Aliases
+-Handle - the middleman that allows a process to access hardware
+
+
