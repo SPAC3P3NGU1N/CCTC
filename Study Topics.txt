@@ -16,6 +16,22 @@ get-CimInstance
 get-help
 get-alias
 get-member
+get-ADUser
+get-ADGroupMember
+schtasks
+new-item
+new-itemproperty
+reg.exe
+regedit
+wf
+netsh advfirewall
+get-netfirewallrule
+icacls
+get-acl
+sfc
+auditpol
+wevtutil
+eventvwr
 
 
 
@@ -31,6 +47,8 @@ logonsessions
 psloggedon
 psexec
 handle
+accesschk
+sigcheck
 
 Process States
 --------------
@@ -50,3 +68,11 @@ Running
 Waiting
 Transition
 Terminated
+
+Security Topics
+--------------
+UAC/UIPI
+WRP
+Signature Based Detection vs Heuristic Based Detection
+Hardening
+Process Validity

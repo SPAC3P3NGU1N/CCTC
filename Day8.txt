@@ -1,0 +1,68 @@
+Windows Firewall
+----------------
+Three Profiles:
+- Public - the most restrictive
+- Private - 
+- Domain - the least restrictive
+
+To show the firewall rules:
+-get-netfirewallrule | select Name, Enabled, Direction, Description | Format-List - powershell command to display firewall rules
+-wf - brings up the GUI
+-netsh advfirewall show allprofiles
+-wmic /namespace:\\Root\StandardCimv2 path MSFT_NetFirewallRule where 'DisplayName LIKE %ICMP% get Displayname,enabled,profiles
+
+To see available set options:
+netsh advfirewall set allprofiles
+
+The service that runs the Windows firewall is
+MPSSVC
+
+To enable firewall logging:
+-netsh advfirewall set allprofiles logging allowedconnections enable
+-netsh advfirewall set allprofiles logging droppedconnections enable
+
+File Permissions
+----------------
+-icacls <filepath of executable> = CLI
+-get-acl <filepath> | Format-List = powershell
+-accesschk <filepath> = sysinternals tool
+-Right Click on file -> Properties -> Security
+
+Windows Resource Protection (WRP) - replaced Windows File Protection
+--------------------------
+-Keeps certain system files from being overwritten or deleted to save the OS from being corrupted
+-Protected resources can only be modified by the Windows Module Installer (trustedinstaller.exe) service
+-Can also protect system registry keys
+-Backup of the files are kept in %Windir%\winsxs\Backup or C:\Windows\winsxs\Backup
+
+System File Checker
+-------------------
+sfc /verifyfile=<filepath> = this checks to see if the file has bene modified or has integrity violations
+sfc /scannow - verifies whole system
+
+
+User Account Control
+--------------------
+-UAC controls the privileges of user-run applications to prevent the modification of system files, -resources or settings to prevent damage.
+-It is possible for an automatic elevation of UAC permissions that allow programs to bypass the popup UAC confirmation
+-To check on UAC settings for a file:
+	- sigcheck -m <filepath> = sysinternals tool that shows the permissions
+
+-To alter the permissions of a file
+	- Go into Regedit.exe
+	- HKCU\Software\Classes
+
+-UIPI = user interface privilege isolation
+	- This issues a privilege level (integrity level) to each process
+	- Higher privileged processes can send messages to lower level
+	- but lower can only read from higher, not send messages to higher
+
+Information Assurance (IA)
+--------------------------
+The practice of assuring information and managing risks related to the use/processing/storage/transmission of data and the systems/processes used to do so
+
+Includes protection of the CIA triad, plus authenticity and non-repudiation
+
+
+ 
+

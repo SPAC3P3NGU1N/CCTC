@@ -1,0 +1,73 @@
+Windows Networking
+------------------
+Key Points Today
+SMB
+Mail Slots
+NetBios
+RPC
+Sockets
+
+Remote Procedure Call
+- Applications load a DLL containing stub procedures for remote functions
+-
+
+
+Mailslots
+- One way interprocess communication
+- acts as a file kept in memory
+- useful for a single process sending broadcasts to multiple processes
+
+SMB/CIFS and NetBIOS
+- Server Message Block
+	- Primary remote file-access protocol on Windows
+	- Also known as Common Internet Files System (CIFS)
+-NetBIOS
+	-nbtstat command
+
+
+Windows Network Naming Schemes
+- Relative Distinguished Name (RDN)
+	- Hostname or computer name
+- DNS domain hierarchy location
+- The combination of these form the FQDN for the system
+
+Sockets
+- A socket is one endpoint of a two-way communication link between two programs running on a network, where an endpoint consists of an IP address and port number
+	- Three types of sockets
+		- Stream
+			- Enable processes to communicate via TCP
+			- Stream socket allows bidirectional, reliable, sequenced flow of data
+			- After connection establishes, data can be read from and written as byte stream
+		- Datagram
+			- Enable processes to communicate via UDP
+			- Allows bidirectional flow of data, but not sequenced or reliable
+			- Messages via Datagram can be duplicated and/or dropped
+		- Raw
+			- Enable access to the underlying transport provider
+			- Can manipulate the underlying transport, so they can be used for malicious purposes that pose a security threat.
+
+Network Analysis Built-in Tools
+-------------------------------
+- ipconfig
+	- ipconfig /all = shows all network settings
+	- ipconfig /displaydns = shows DNS resolver cache
+
+- nbtstat
+	- nbtstat -A <IP>
+
+- route
+	- route print - shows routing table (like netstat -r)
+
+- arp
+	- arp -a = shows local domain ARP table
+
+- netstat
+	- netstat -ano = shows connections and open ports
+	- netstat -anb = shows PIDS tied to activity
+	- netstat -s = shows network statistics
+	- netstat -r = shows routing table
+
+
+
+
+

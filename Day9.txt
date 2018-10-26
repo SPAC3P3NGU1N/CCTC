@@ -1,0 +1,84 @@
+Windows Security
+----------------
+Host-based:
+- Runs local on machine
+	- System Firewalls
+	- Process monitoring, kernel calls
+	- Directory monitoring
+	- System setting/Registry monitoring
+	- Directory monitoring
+	- System setting/Registry Monitoring
+	- Log monitoring
+	- Authentication, Authorization, Accounting (AAA)
+	- Application Whitelisting
+
+- Network-based:
+	- Monitors traffic across the wire, can be inline or passive
+		- inline usually modifies traffic between destination and source
+	- Network Firewalls
+	- IDS/IPS
+	- Web/Application Proxy
+	- VPN Concentrator
+
+- Signature-based Security
+	- Device or Software that maintains a database of attack signatures
+	- Only detects previously identified and cataloged attacks
+	- Signatures require constant updating
+	- Small changes to a binary could bypass the signature
+	- Zero-days, since they have not been seen before, usually bypass signature-based security
+
+- Heuristic-Based
+	- Device or Software develops a baseline of the system, then looks for anomalous activity
+	- Has potential to catch a Zero-day... maybe
+	- Larger of number of false positives vs detection based
+
+Windows Auditing
+----------------
+Why are audit policies important?
+	- Maintains a record of access to secure objects
+
+Function of main logs:
+	- At startup, LSASS sends the system audit policy to the Security Reference Monitor (SRM)
+	- When an object is accessed, SRM generates auditing messages and sends them to LSASS
+	- LSASS sends the event log messages on to the Event Logger
+
+Main Logs:
+	- Application = events logged by apps
+	- Security = logins/logoffs, and events related to resource use
+	- System = events logged by system components
+	- CustomLog = events logged by apps that create a custom log
+
+Audit Policy Settings
+	- Auditing settings are contained in the System Access Control List (SACL)
+		- Object-access control entry (ACE) = audit settings defined per object basis
+	- Global Audit Policy - SACL
+		- Global policy to setup auditing on all objects of a particular type
+			-e.g. Registry keys or file system objects
+	- Local security policy
+		-must also be enabled for auditing to be logged
+
+To configure audit policies
+- Local Security Policy (GUI-based_
+	- Advanced audit policy configuration settings
+- via Command Line
+	- auditpol /get /category:*
+		-From here
+		-auditpol /set /subcategory:"<CATEGORY>" /success:enable <OR> disable /failure:enable 
+			<OR> disable
+	- auditpol /resourceSACL /type:file /view
+	- auditpol /resourceSACL /type:Key /view
+
+View/Analyze Event Logs 
+-GUI
+	- eventvwr
+		- reads from c:\windws\system32\winevt
+		- locations are configurable
+-CLI
+	-wevtutil el = shows all logs
+	-wevtutil gli security = get security log info
+	-wevtutil qe security /c:3 = get last 3 events from security log
+
+-Powershell
+	-get-eventlog -logname System -newest 10 = shows the latest 10 entries into the System logg
+
+

