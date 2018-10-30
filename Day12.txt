@@ -1,0 +1,66 @@
+Incident Response
+-----------------
+
+6 Phases of Incident Response ("be PICIER about your response")
+- Preparation
+	- Packing List
+	- Update tools
+	- Training
+	- Documentation
+	- Network Diagrams
+	- Incident Response Team
+	- Enable NTP
+- Identification
+	- Was it an INCIDENT or ADVERSE EVENT?
+	- Adverse Event
+		- Event with negative consequences
+		- Unauthorized use of system privileges
+		- Unauthorized acess to sensitve data
+		- Execution of malware that destroys data
+	- Incidents
+		- Event that violates an organization's security or privacy policies
+		- Unusual Activity/Configs outside baseline
+		- Unknown connection
+		- Unusual user privileges/unknown user accounts
+		- External devices
+		- High Traffic Volumes
+		- Unusual Logons
+- Containment
+	- Limit damage caused to systems and prevent future damage
+		- Cordon and Clear (VLANs)
+		- Remove from Network
+		- Quarantine
+		- Sandbox
+		- Patch / Hotfix
+		- Add Firewalls
+- Investigation
+	- Determine the priority/scope/root cause of an incident
+		- Attribution
+		- Avenue of approach
+		- Indicators of Compromise
+		- Vulnerability Assessment
+		- Forensic Analysis
+- Eradication
+	- Remove the infection
+		- From the investigation, you should know what you have to remove
+		- Reimage
+		- Key rotation
+		- Clean (and monitor)
+- Recovery
+	- Determine when to bring the system back into production and how long we montiro the system for signs of abnormal activity
+		- Remove VLANs
+		- Return network to normal
+		- Lessons Learned
+		- Update SOP, AAR
+		- Continually Monitor (leave sensors behind)
+
+Volatility
+-----------
+- Order of Volatility
+	- Registers, cache
+	- Routing Table, arp cache, process table, kernel statistics, memory (RAM)
+	- temporary file systems
+	- disk and other storage media
+	- remote logging and monitoring data that is relevant to the system in question
+	- physical configuration, network topology
+	- archival media

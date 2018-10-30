@@ -1,0 +1,45 @@
+Windows Security System Concepts (Active Directory)
+-------------------------------
+- Security Reference Monitor (SRM): In Kernel Mode (ntoskrnl)
+- Local Security Authority Subsystem (LSASS) - passes credentials to the SAM
+- LSASS Policy database
+- Security Accounts Manager (SAM)
+- SAM Database: HKLM\SAM
+- Active Dir
+- Authentication Packages
+- Interactive Logon Manager (Winlogon)
+- Logon User Interface (LogonUI)
+- Credential Providers (CP)
+- Network Logon Service (Netlogon)
+- Kernel Security Device Driver (KSecDD)
+
+Security Identifier (SID) and 
+
+SID's have the numbers that look like S-1-5-21-238947234-32948723947-32498723490-1003
+The domain section is the 21 section thru the last long section
+The RID is the last 4 digits and tells what kind of account it is:
+	- 500 - Admin account
+	- 501 - Guest Account
+	- 1000+ - Beginning of User Accounts
+-To see the SID/RID
+	- reg query HKU
+		- reg query "hklm\software\microsoft\windows nt\currentversion\profileslist\{SID}"	
+	- psgetsid
+	- WMIC useraccount list brief
+		- WMIC useraccount get name, sid, fullname
+	- get-childitem registry::HKEY_USERS -error action silentlycontinue
+		- get-childitem 'hklm:\software\microsoft\windows nt\currentversion\profilelist\'
+
+Logical and Physical Structure of Active Directory
+- Logical Structure
+	- Domains - top level structure
+	- Organizational Unit - allows subdivision of domains, e.g. army unit subdomains (USASOC)
+	- Trees and Forest - A tree is a grouping of multiple domains, usually parent/child relationship, 			the Forest is the very top of the AD Structure. It holds all objects, OUs, and domains
+
+- Physical Structure
+	- Sites - an AD object representing a collection of IP subnets
+	- Domain Controllers
+	- Member Servers
+
+- gpresult
+	- a CLI command that displays the group policies that are issued to this workstation
