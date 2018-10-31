@@ -1,0 +1,95 @@
+Boot Process
+
+Thread States & Process State
+- What are they, and what are their definitions
+
+SACL
+- Defines which secure object interactions will be audited and logged
+
+Session ID's
+- 0 = kernel/system level
+- 1 = user session
+- 2 = second user session
+
+Site/Tree/Schema/Forest
+
+MDMP Steps
+-Receipt of Mission
+-Mission Analysis
+-COA Development
+-COA Comparison/Wargaming
+-COA Approval
+-Conduct Mission
+-AAR
+
+Process States
+--------------
+-New/Created
+-Ready
+-Runny
+-Waiting
+-Terminated/Exit
+
+Thread States
+-------------
+Initialized
+Ready
+Deferred Ready
+Standby
+Running
+Waiting
+Transition
+Terminated
+
+Incident Response Steps
+-----------------------
+Preparation
+Identification
+Containment
+Investigation
+Eradication
+Recovery
+
+
+Common Functions
+=================
+-To check processes
+	- tasklist
+	- pslist
+	- procexp
+	- procmon
+	- wmic process
+	- get-process
+
+- To check environmental variables
+	- gci env:
+	- set
+
+- To check user accounts
+	- net user
+	- wmic useraccount
+	- get-aduser
+	- get-localuser
+
+- To check groups
+	- net localgroup
+	- wmic group
+	- get-localgroup
+	- get-adgroupmember
+
+- To check firewall
+	- wf.msc
+	- netsh advfirewall
+	- get-netfirewallrule
+
+- To check file permissions
+	- icacls
+	- get-acl
+	- accesschk
+
+
+- To see logs
+	- wevtutil
+	- eventvwr
+	- get-eventlog
+
